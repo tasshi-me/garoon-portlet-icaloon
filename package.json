@@ -17,10 +17,12 @@
     "format": "biome format --write src scripts"
   },
   "dependencies": {
-    "ical.js": "^2.1.0"
+    "ical.js": "^2.1.0",
+    "preact": "^10.29.2"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@preact/preset-vite": "^2.10.5",
     "@types/node": "^25.9.1",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3",

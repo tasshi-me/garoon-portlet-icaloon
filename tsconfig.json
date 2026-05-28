@@ -15,7 +15,9 @@
     "isolatedModules": true,
     "verbatimModuleSyntax": false,
     "useDefineForClassFields": true,
-    "noEmit": true
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
   },
   "include": ["src", "scripts"]
 }

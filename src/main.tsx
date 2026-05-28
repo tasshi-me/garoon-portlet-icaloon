@@ -1,6 +1,7 @@
+import { render } from "preact";
 import "./styles.css";
 import { detectAndSetLocale, t } from "./i18n";
-import { mount } from "./ui";
+import { App } from "./ui";
 
 function init() {
   detectAndSetLocale();
@@ -9,7 +10,7 @@ function init() {
     console.warn(t("rootNotFound"));
     return;
   }
-  mount(root);
+  render(<App />, root);
 }
 
 if (document.readyState === "loading") {
