@@ -1,4 +1,5 @@
 import ICAL from "ical.js";
+import { t } from "./i18n";
 import type { ParseResult, ParsedEvent } from "./types";
 
 const DEFAULT_TZ = "Asia/Tokyo";
@@ -11,8 +12,8 @@ export function parseIcs(text: string): ParseResult[] {
     return [
       {
         ok: false,
-        subject: "(ファイル全体)",
-        reason: `ics のパースに失敗: ${formatError(err)}`,
+        subject: t("wholeFile"),
+        reason: t("parseFailure", { reason: formatError(err) }),
       },
     ];
   }
@@ -20,7 +21,7 @@ export function parseIcs(text: string): ParseResult[] {
   const root = new ICAL.Component(jcal as never);
   const vevents = root.getAllSubcomponents("vevent");
   if (vevents.length === 0) {
-    return [{ ok: false, subject: "(VEVENT なし)", reason: "VEVENT が含まれていません" }];
+    return [{ ok: false, subject: t("noVevent"), reason: t("noVeventReason") }];
   }
 
   return vevents.map(toParseResult);
@@ -28,16 +29,16 @@ export function parseIcs(text: string): ParseResult[] {
 
 function toParseResult(vevent: ICAL.Component): ParseResult {
   const event = new ICAL.Event(vevent);
-  const subject = event.summary ?? "(無題)";
+  const subject = event.summary ?? t("untitled");
 
   try {
     if (event.isRecurring()) {
-      return { ok: false, subject, reason: "繰り返し予定 (RRULE) は未対応のためスキップ" };
+      return { ok: false, subject, reason: t("rruleUnsupported") };
     }
 
     const startTime = event.startDate;
     if (!startTime) {
-      return { ok: false, subject, reason: "DTSTART がありません" };
+      return { ok: false, subject, reason: t("noDtstart") };
     }
 
     const endTime = event.endDate ?? null;
@@ -49,7 +50,7 @@ function toParseResult(vevent: ICAL.Component): ParseResult {
 
     const notesParts: string[] = [];
     if (event.description) notesParts.push(event.description);
-    if (event.location) notesParts.push(`場所: ${event.location}`);
+    if (event.location) notesParts.push(t("locationLabel", { location: event.location }));
     const notes = notesParts.join("\n");
 
     const parsed: ParsedEvent = {
@@ -62,7 +63,7 @@ function toParseResult(vevent: ICAL.Component): ParseResult {
     };
     return { ok: true, event: parsed };
   } catch (err) {
-    return { ok: false, subject, reason: `変換エラー: ${formatError(err)}` };
+    return { ok: false, subject, reason: t("convertError", { reason: formatError(err) }) };
   }
 }
 

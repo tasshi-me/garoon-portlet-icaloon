@@ -1,3 +1,4 @@
+import { t } from "./i18n";
 import type { CreateResult, GaroonEventInput, ParsedEvent } from "./types";
 
 export function buildEventInput(parsed: ParsedEvent, loginUserCode: string): GaroonEventInput {
@@ -27,7 +28,7 @@ export async function createEvent(input: GaroonEventInput): Promise<CreateResult
 }
 
 function extractErrorMessage(err: unknown): string {
-  if (!err) return "不明なエラー";
+  if (!err) return t("unknownError");
   if (typeof err === "string") return err;
   if (err instanceof Error) return err.message;
   if (typeof err === "object") {

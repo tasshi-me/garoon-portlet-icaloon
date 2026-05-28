@@ -1,4 +1,5 @@
 import { buildEventInput, createEvent } from "./garoon-api";
+import { t } from "./i18n";
 import { getLoginUserCode } from "./login-user";
 import { parseIcs } from "./parser";
 import type { CreateResult, ParseResult } from "./types";
@@ -36,7 +37,7 @@ export function mount(root: HTMLElement): void {
 
     const title = document.createElement("h3");
     title.className = "icaroon-title";
-    title.textContent = "iCaroon — ics インポート";
+    title.textContent = t("appTitle");
     root.appendChild(title);
 
     switch (state.phase) {
@@ -58,7 +59,7 @@ export function mount(root: HTMLElement): void {
   function renderIdle() {
     const sub = document.createElement("p");
     sub.className = "icaroon-subtitle";
-    sub.textContent = ".ics ファイルを選択またはドラッグ&ドロップしてください。";
+    sub.textContent = t("fileDropHint");
     root.appendChild(sub);
 
     const drop = document.createElement("label");
@@ -70,7 +71,7 @@ export function mount(root: HTMLElement): void {
 
     const text = document.createElement("div");
     text.className = "icaroon-drop-text";
-    text.textContent = "クリックして選択 / ここにドラッグ";
+    text.textContent = t("fileDropArea");
 
     drop.appendChild(input);
     drop.appendChild(text);
@@ -107,7 +108,12 @@ export function mount(root: HTMLElement): void {
     sub.className = "icaroon-subtitle";
     const okCount = s.results.filter((r) => r.ok).length;
     const skipCount = s.results.length - okCount;
-    sub.textContent = `${s.fileName}: ${s.results.length} 件 (登録対象 ${okCount} 件 / スキップ ${skipCount} 件)`;
+    sub.textContent = t("parsedSummary", {
+      fileName: s.fileName,
+      total: s.results.length,
+      ok: okCount,
+      skip: skipCount,
+    });
     root.appendChild(sub);
 
     root.appendChild(buildResultTable(s.results));
@@ -117,14 +123,14 @@ export function mount(root: HTMLElement): void {
 
     const runBtn = document.createElement("button");
     runBtn.className = "icaroon-button icaroon-button--primary";
-    runBtn.textContent = `${okCount} 件を登録`;
+    runBtn.textContent = t("registerButton", { count: okCount });
     runBtn.disabled = okCount === 0;
     runBtn.addEventListener("click", () => runImport(s));
     actions.appendChild(runBtn);
 
     const cancelBtn = document.createElement("button");
     cancelBtn.className = "icaroon-button";
-    cancelBtn.textContent = "キャンセル";
+    cancelBtn.textContent = t("cancel");
     cancelBtn.addEventListener("click", () => setState({ phase: "idle" }));
     actions.appendChild(cancelBtn);
 
@@ -181,7 +187,7 @@ export function mount(root: HTMLElement): void {
   function renderRunning(s: Extract<State, { phase: "running" }>) {
     const sub = document.createElement("p");
     sub.className = "icaroon-subtitle";
-    sub.textContent = `登録中… ${s.done} / ${s.total}`;
+    sub.textContent = t("registering", { done: s.done, total: s.total });
     root.appendChild(sub);
 
     const bar = document.createElement("div");
@@ -205,7 +211,11 @@ export function mount(root: HTMLElement): void {
     } else {
       summary.classList.add("icaroon-summary--mixed");
     }
-    summary.textContent = `完了: 成功 ${success} 件 / 失敗 ${failed.length} 件 / スキップ ${skipped.length} 件`;
+    summary.textContent = t("doneSummary", {
+      success,
+      failed: failed.length,
+      skipped: skipped.length,
+    });
     root.appendChild(summary);
 
     if (failed.length > 0 || skipped.length > 0) {
@@ -213,13 +223,13 @@ export function mount(root: HTMLElement): void {
       list.className = "icaroon-error-list";
       for (const f of failed) {
         const li = document.createElement("li");
-        li.textContent = `[失敗] ${f.subject}: ${f.message}`;
+        li.textContent = t("failedItem", { subject: f.subject, message: f.message });
         list.appendChild(li);
       }
       for (const sk of skipped) {
         if (sk.ok) continue;
         const li = document.createElement("li");
-        li.textContent = `[スキップ] ${sk.subject}: ${sk.reason}`;
+        li.textContent = t("skippedItem", { subject: sk.subject, reason: sk.reason });
         list.appendChild(li);
       }
       root.appendChild(list);
@@ -229,7 +239,7 @@ export function mount(root: HTMLElement): void {
     actions.className = "icaroon-actions";
     const again = document.createElement("button");
     again.className = "icaroon-button icaroon-button--primary";
-    again.textContent = "もう一度";
+    again.textContent = t("tryAgain");
     again.addEventListener("click", () => setState({ phase: "idle" }));
     actions.appendChild(again);
     root.appendChild(actions);
@@ -239,7 +249,11 @@ export function mount(root: HTMLElement): void {
     const table = document.createElement("table");
     table.className = "icaroon-table";
     const thead = document.createElement("thead");
-    thead.innerHTML = "<tr><th>件名</th><th>開始</th><th>終了</th><th>終日</th><th>状態</th></tr>";
+    thead.innerHTML = `<tr><th>${escapeHtml(t("colSubject"))}</th><th>${escapeHtml(
+      t("colStart"),
+    )}</th><th>${escapeHtml(t("colEnd"))}</th><th>${escapeHtml(
+      t("colAllDay"),
+    )}</th><th>${escapeHtml(t("colStatus"))}</th></tr>`;
     table.appendChild(thead);
 
     const tbody = document.createElement("tbody");
@@ -251,12 +265,12 @@ export function mount(root: HTMLElement): void {
         const startStr = formatDateTime(e.start.dateTime, e.start.timeZone, e.isAllDay);
         const endStr = e.end
           ? formatDateTime(e.end.dateTime, e.end.timeZone, e.isAllDay)
-          : "(なし)";
+          : t("endNone");
         tr.innerHTML = `<td>${escapeHtml(e.subject)}</td><td>${escapeHtml(
           startStr,
         )}</td><td>${escapeHtml(endStr)}</td><td>${
           e.isAllDay ? "✓" : ""
-        }</td><td>OK</td>`;
+        }</td><td>${escapeHtml(t("statusOk"))}</td>`;
       } else {
         tr.innerHTML = `<td>${escapeHtml(r.subject)}</td><td colspan="3"></td><td>${escapeHtml(
           r.reason,
