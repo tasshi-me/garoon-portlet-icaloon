@@ -1,0 +1,128 @@
+.icaroon {
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.icaroon * {
+  box-sizing: border-box;
+}
+
+.icaroon-title {
+  font-size: 1.15em;
+  font-weight: bold;
+  margin: 0 0 6px;
+}
+
+.icaroon-subtitle {
+  margin: 0 0 8px;
+  opacity: 0.7;
+  font-size: 0.9em;
+}
+
+.icaroon-drop {
+  display: block;
+  border: 2px dashed currentColor;
+  border-radius: 4px;
+  padding: 18px;
+  text-align: center;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+}
+
+.icaroon-drop:hover,
+.icaroon-drop--active {
+  opacity: 1;
+}
+
+.icaroon-drop input[type="file"] {
+  display: none;
+}
+
+.icaroon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: 3px;
+  border: 1px solid currentColor;
+  background: none;
+  color: inherit;
+  font: inherit;
+  line-height: 1.4;
+  cursor: pointer;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.icaroon-button:hover:not([disabled]) {
+  opacity: 0.7;
+}
+
+.icaroon-button--primary {
+  background-color: #3498db;
+  border-color: #3498db;
+  color: #fff;
+}
+
+.icaroon-button[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.icaroon-actions {
+  margin-top: 10px;
+}
+
+.icaroon-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+
+.icaroon-table th,
+.icaroon-table td {
+  border: 1px solid currentColor;
+  border-color: rgba(128, 128, 128, 0.3);
+  padding: 4px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.icaroon-table th {
+  font-weight: 600;
+  background-color: rgba(128, 128, 128, 0.08);
+}
+
+.icaroon-row--skip {
+  opacity: 0.6;
+}
+
+.icaroon-progress {
+  margin-top: 10px;
+  height: 6px;
+  background-color: rgba(128, 128, 128, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.icaroon-progress-bar {
+  height: 100%;
+  background-color: #3498db;
+  width: 0;
+  transition: width 0.2s ease;
+}
+
+.icaroon-summary {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-radius: 3px;
+  background-color: rgba(128, 128, 128, 0.08);
+}
+
+.icaroon-error-list {
+  margin: 6px 0 0;
+  padding-left: 18px;
+  font-size: 0.9em;
+}

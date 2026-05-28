@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+.vite/
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.zed/
+.cursor/
+.aider*
