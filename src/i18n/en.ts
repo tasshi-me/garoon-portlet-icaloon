@@ -41,5 +41,17 @@ export const en: Messages = {
   loginUserFetchFail: "Failed to retrieve login user info",
   unknownError: "Unknown error",
 
+  helpButton: "Help",
+  helpTitle: "About iCaroon",
+  close: "Close",
+  helpLinks: "Links",
+  helpRepository: "Repository (GitHub)",
+  helpLicense: "License",
+  helpAppLicense: "iCaroon is released under the MIT License.",
+  helpOssLicenses: "Open source licenses",
+  helpOssLicensesNote: "iCaroon uses the following open source software.",
+  helpSource: "Source",
+  helpSourceOf: "Source code of {name}",
+
   rootNotFound: "[iCaroon] #icaroon-root not found",
 };

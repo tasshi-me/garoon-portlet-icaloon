@@ -1,5 +1,6 @@
-import { useState } from "preact/hooks";
+import { useCallback, useState } from "preact/hooks";
 import { buildEventInput, createEvent } from "./garoon-api";
+import { HelpDialog } from "./help-dialog";
 import { t } from "./i18n";
 import { getLoginUserCode } from "./login-user";
 import { parseIcs } from "./parser";
@@ -27,16 +28,30 @@ type State =
 
 export function App() {
   const [state, setState] = useState<State>({ phase: "idle" });
+  const [helpOpen, setHelpOpen] = useState(false);
+  const closeHelp = useCallback(() => setHelpOpen(false), []);
 
   return (
     <div class="icaroon" data-version={__APP_VERSION__}>
-      <h3 class="icaroon-title">{t("appTitle")}</h3>
+      <div class="icaroon-header">
+        <h3 class="icaroon-title">{t("appTitle")}</h3>
+        <button
+          type="button"
+          class="icaroon-help-button"
+          aria-label={t("helpButton")}
+          title={t("helpButton")}
+          onClick={() => setHelpOpen(true)}
+        >
+          ?
+        </button>
+      </div>
       {state.phase === "idle" && <IdleView onParsed={setState} />}
       {state.phase === "parsed" && <ParsedView state={state} setState={setState} />}
       {state.phase === "running" && <RunningView state={state} />}
       {state.phase === "done" && (
         <DoneView state={state} onReset={() => setState({ phase: "idle" })} />
       )}
+      {helpOpen && <HelpDialog onClose={closeHelp} />}
     </div>
   );
 }
