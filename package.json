@@ -6,7 +6,7 @@
   "type": "module",
   "license": "MIT",
   "author": "tasshi (Masaharu Tashiro)",
-  "packageManager": "pnpm@9.7.1",
+  "packageManager": "pnpm@10.34.9",
   "scripts": {
     "dev": "vite",
     "build:bundle": "vite build",
@@ -27,5 +27,11 @@
     "tsx": "^4.23.15",
     "typescript": "^5.9.3",
     "vite": "^6.4.6"
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "@biomejs/biome",
+      "esbuild"
+    ]
   }
 }
