@@ -12,22 +12,7 @@ Garoon のポートレットとして動く `.ics` インポートツール。
 
 ## 開発
 
-[mise](https://mise.jdx.dev/) で Node.js / pnpm のバージョンを管理している。
-
-```bash
-mise install
-pnpm install
-pnpm typecheck
-pnpm build       # dist/iCaroon.xml を生成
-```
-
-開発用サーバ:
-
-```bash
-pnpm dev
-```
-
-ローカルでは `garoon` グローバルが存在しないため、ポートレットの実 API 呼び出しは失敗する。UI とパースの動作確認には `samples/sample.ics` を利用できる。
+開発環境のセットアップや、ローカル・実 Garoon 上での動作確認は [docs/development.md](docs/development.md) を参照。
 
 ## Garoon への導入
 
