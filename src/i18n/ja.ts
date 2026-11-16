@@ -1,7 +1,8 @@
 import type { Messages } from "./messages";
 
 export const ja: Messages = {
-  appTitle: "iCaroon — ics インポート",
+  appName: "iCal読め太郎 for Garoon",
+  appTitle: "iCal読め太郎 for Garoon — ics インポート",
 
   fileDropHint: ".ics ファイルを選択またはドラッグ&ドロップしてください。",
   fileDropArea: "クリックして選択 / ここにドラッグ",
@@ -42,16 +43,17 @@ export const ja: Messages = {
   unknownError: "不明なエラー",
 
   helpButton: "ヘルプ",
-  helpTitle: "iCaroon について",
+  helpTitle: "iCal読め太郎 for Garoon について",
   close: "閉じる",
   helpLinks: "リンク",
   helpRepository: "リポジトリ (GitHub)",
   helpLicense: "ライセンス",
-  helpAppLicense: "iCaroon は MIT License で提供しています。",
+  helpAppLicense: "iCal読め太郎 for Garoon は MIT License で提供しています。",
   helpOssLicenses: "オープンソースライセンス",
-  helpOssLicensesNote: "iCaroon は以下のオープンソースソフトウェアを利用しています。",
+  helpOssLicensesNote:
+    "iCal読め太郎 for Garoon は以下のオープンソースソフトウェアを利用しています。",
   helpSource: "ソース",
   helpSourceOf: "{name} のソースコード",
 
-  rootNotFound: "[iCaroon] #icaroon-root が見つかりません",
+  rootNotFound: "[iCaloon] #icaloon-root が見つかりません",
 };

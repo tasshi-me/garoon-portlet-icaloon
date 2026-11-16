@@ -1,14 +1,14 @@
-// vite build の成果物 (icaroon.iife.js / icaroon.css) から
+// vite build の成果物 (icaloon.iife.js / icaloon.css) から
 // Garoon の HTML ポートレット用の成果物を生成する（ファイル名にバージョン＋ビルド日時）:
-//   - dist/icaroon_v<version>_<日時>.xml   「XMLファイルから読み込む」でインポートする XML
-//   - dist/icaroon_v<version>_<日時>.html  既存ポートレットの内容欄に貼り付ける HTML 断片
+//   - dist/icaloon_v<version>_<日時>.xml   「XMLファイルから読み込む」でインポートする XML
+//   - dist/icaloon_v<version>_<日時>.html  既存ポートレットの内容欄に貼り付ける HTML 断片
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const root = resolve(import.meta.dirname ?? ".", "..");
 const distDir = resolve(root, "dist");
-const jsPath = resolve(distDir, "icaroon.iife.js");
-const cssPath = resolve(distDir, "icaroon.css");
+const jsPath = resolve(distDir, "icaloon.iife.js");
+const cssPath = resolve(distDir, "icaloon.css");
 
 const { version } = JSON.parse(readFileSync(resolve(root, "package.json"), "utf8")) as {
   version: string;
@@ -19,14 +19,14 @@ const builtAt = new Date().toLocaleString("sv-SE", {
   dateStyle: "short",
   timeStyle: "short",
 });
-const portletName = `iCaroon v${version} (${builtAt})`;
+const portletName = `iCal読め太郎 for Garoon (iCaloon) v${version} (${builtAt})`;
 
 const js = readFileSync(jsPath, "utf8");
 const css = readFileSync(cssPath, "utf8");
 
 const source = [
   `<style>${css}</style>`,
-  `<div id="icaroon-root"></div>`,
+  `<div id="icaloon-root"></div>`,
   `<script>${js}</script>`,
 ].join("\n");
 
@@ -46,7 +46,7 @@ const xml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
 // ファイル名にはコロンとスペースを使わない
 const stamp = builtAt.replace(" ", "-").replaceAll(":", "");
-const base = `icaroon_v${version}_${stamp}`;
+const base = `icaloon_v${version}_${stamp}`;
 const xmlPath = resolve(distDir, `${base}.xml`);
 const htmlPath = resolve(distDir, `${base}.html`);
 

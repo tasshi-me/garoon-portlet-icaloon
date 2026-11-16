@@ -1,4 +1,5 @@
 export type Messages = {
+  appName: string;
   appTitle: string;
 
   // idle screen

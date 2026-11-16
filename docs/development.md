@@ -46,7 +46,7 @@ API モードは 2 つある:
 実 Garoon のポータルに即反映される。
 
 1. `dev/html_portlet.dev.xml` を Garoon に一度だけインポートしてポータルに配置
-   （中身は `#icaroon-root` と `http://localhost:5173` のスクリプトを読むだけ）
+   （中身は `#icaloon-root` と `http://localhost:5173` のスクリプトを読むだけ）
 2. `pnpm dev` を起動
 3. ブラウザでポータルを開く。以降はコードを編集すると自動で反映される
 

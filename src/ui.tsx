@@ -32,12 +32,12 @@ export function App() {
   const closeHelp = useCallback(() => setHelpOpen(false), []);
 
   return (
-    <div class="icaroon" data-version={__APP_VERSION__}>
-      <div class="icaroon-header">
-        <h3 class="icaroon-title">{t("appTitle")}</h3>
+    <div class="icaloon" data-version={__APP_VERSION__}>
+      <div class="icaloon-header">
+        <h3 class="icaloon-title">{t("appTitle")}</h3>
         <button
           type="button"
-          class="icaroon-help-button"
+          class="icaloon-help-button"
           aria-label={t("helpButton")}
           title={t("helpButton")}
           onClick={() => setHelpOpen(true)}
@@ -67,9 +67,9 @@ function IdleView({ onParsed }: { onParsed: (s: State) => void }) {
 
   return (
     <>
-      <p class="icaroon-subtitle">{t("fileDropHint")}</p>
+      <p class="icaloon-subtitle">{t("fileDropHint")}</p>
       <label
-        class={`icaroon-drop${active ? " icaroon-drop--active" : ""}`}
+        class={`icaloon-drop${active ? " icaloon-drop--active" : ""}`}
         onDragOver={(e) => {
           e.preventDefault();
           setActive(true);
@@ -90,7 +90,7 @@ function IdleView({ onParsed }: { onParsed: (s: State) => void }) {
             if (file) handleFile(file);
           }}
         />
-        <div class="icaroon-drop-text">{t("fileDropArea")}</div>
+        <div class="icaloon-drop-text">{t("fileDropArea")}</div>
       </label>
     </>
   );
@@ -179,7 +179,7 @@ function ParsedView({
 
   return (
     <>
-      <p class="icaroon-subtitle">
+      <p class="icaloon-subtitle">
         {t("parsedSummary", {
           fileName: state.fileName,
           total: state.results.length,
@@ -193,16 +193,16 @@ function ParsedView({
         onToggle={toggle}
         onToggleAll={toggleAll}
       />
-      <div class="icaroon-actions">
+      <div class="icaloon-actions">
         <button
           type="button"
-          class="icaroon-button icaroon-button--primary"
+          class="icaloon-button icaloon-button--primary"
           disabled={selectedCount === 0}
           onClick={runImport}
         >
           {t("registerButton", { count: selectedCount })}
         </button>
-        <button type="button" class="icaroon-button" onClick={() => setState({ phase: "idle" })}>
+        <button type="button" class="icaloon-button" onClick={() => setState({ phase: "idle" })}>
           {t("cancel")}
         </button>
       </div>
@@ -213,10 +213,10 @@ function ParsedView({
 function RunningView({ state }: { state: Extract<State, { phase: "running" }> }) {
   return (
     <>
-      <p class="icaroon-subtitle">{t("registering", { done: state.done, total: state.total })}</p>
-      <div class="icaroon-progress">
+      <p class="icaloon-subtitle">{t("registering", { done: state.done, total: state.total })}</p>
+      <div class="icaloon-progress">
         <div
-          class="icaroon-progress-bar"
+          class="icaloon-progress-bar"
           style={{ width: `${(state.done / state.total) * 100}%` }}
         />
       </div>
@@ -247,7 +247,7 @@ function DoneView({
   return (
     <>
       <div
-        class={`icaroon-summary ${allGood ? "icaroon-summary--success" : "icaroon-summary--mixed"}`}
+        class={`icaloon-summary ${allGood ? "icaloon-summary--success" : "icaloon-summary--mixed"}`}
       >
         {t("doneSummary", {
           success,
@@ -257,7 +257,7 @@ function DoneView({
         })}
       </div>
       {(failed.length > 0 || skipped.length > 0) && (
-        <ul class="icaroon-error-list">
+        <ul class="icaloon-error-list">
           {failed.map((f, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: list is immutable
             <li key={`f-${i}`}>{t("failedItem", { subject: f.subject, message: f.message })}</li>
@@ -268,8 +268,8 @@ function DoneView({
           ))}
         </ul>
       )}
-      <div class="icaroon-actions">
-        <button type="button" class="icaroon-button icaroon-button--primary" onClick={onReset}>
+      <div class="icaloon-actions">
+        <button type="button" class="icaloon-button icaloon-button--primary" onClick={onReset}>
           {t("tryAgain")}
         </button>
       </div>
@@ -292,10 +292,10 @@ function ResultTable({
   const selectedCount = results.filter((r, i) => r.ok && selected[i]).length;
 
   return (
-    <table class="icaroon-table">
+    <table class="icaloon-table">
       <thead>
         <tr>
-          <th class="icaroon-col-select">
+          <th class="icaloon-col-select">
             <input
               type="checkbox"
               aria-label={t("colSelect")}
@@ -317,8 +317,8 @@ function ResultTable({
         {results.map((r, i) =>
           r.ok ? (
             // biome-ignore lint/suspicious/noArrayIndexKey: list is immutable
-            <tr key={i} class={selected[i] ? undefined : "icaroon-row--excluded"}>
-              <td class="icaroon-col-select">
+            <tr key={i} class={selected[i] ? undefined : "icaloon-row--excluded"}>
+              <td class="icaloon-col-select">
                 <input
                   type="checkbox"
                   aria-label={t("selectEvent", { subject: r.event.subject })}
@@ -340,8 +340,8 @@ function ResultTable({
             </tr>
           ) : (
             // biome-ignore lint/suspicious/noArrayIndexKey: list is immutable
-            <tr key={i} class="icaroon-row--skip">
-              <td class="icaroon-col-select">
+            <tr key={i} class="icaloon-row--skip">
+              <td class="icaloon-col-select">
                 <input type="checkbox" aria-label={r.subject} checked={false} disabled />
               </td>
               <td>{r.subject}</td>

@@ -1,7 +1,8 @@
 import type { Messages } from "./messages";
 
 export const en: Messages = {
-  appTitle: "iCaroon — Import ics",
+  appName: "iCaloon",
+  appTitle: "iCaloon — Import ics",
 
   fileDropHint: "Select an .ics file or drag and drop it here.",
   fileDropArea: "Click to choose / drop file here",
@@ -42,16 +43,16 @@ export const en: Messages = {
   unknownError: "Unknown error",
 
   helpButton: "Help",
-  helpTitle: "About iCaroon",
+  helpTitle: "About iCaloon",
   close: "Close",
   helpLinks: "Links",
   helpRepository: "Repository (GitHub)",
   helpLicense: "License",
-  helpAppLicense: "iCaroon is released under the MIT License.",
+  helpAppLicense: "iCaloon is released under the MIT License.",
   helpOssLicenses: "Open source licenses",
-  helpOssLicensesNote: "iCaroon uses the following open source software.",
+  helpOssLicensesNote: "iCaloon uses the following open source software.",
   helpSource: "Source",
   helpSourceOf: "Source code of {name}",
 
-  rootNotFound: "[iCaroon] #icaroon-root not found",
+  rootNotFound: "[iCaloon] #icaloon-root not found",
 };

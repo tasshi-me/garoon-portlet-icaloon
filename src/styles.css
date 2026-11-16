@@ -1,13 +1,13 @@
-.icaroon {
+.icaloon {
   padding: 8px;
   box-sizing: border-box;
 }
 
-.icaroon * {
+.icaloon * {
   box-sizing: border-box;
 }
 
-.icaroon-header {
+.icaloon-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -15,13 +15,13 @@
   margin: 0 0 6px;
 }
 
-.icaroon-title {
+.icaloon-title {
   font-size: 1.15em;
   font-weight: bold;
   margin: 0;
 }
 
-.icaroon-help-button {
+.icaloon-help-button {
   flex-shrink: 0;
   width: 24px;
   height: 24px;
@@ -36,17 +36,17 @@
   cursor: pointer;
 }
 
-.icaroon-help-button:hover {
+.icaloon-help-button:hover {
   background: rgba(128, 128, 128, 0.18);
 }
 
-.icaroon-subtitle {
+.icaloon-subtitle {
   margin: 0 0 8px;
   opacity: 0.7;
   font-size: 0.9em;
 }
 
-.icaroon-drop {
+.icaloon-drop {
   display: block;
   border: 2px dashed currentColor;
   border-radius: 4px;
@@ -57,16 +57,16 @@
   transition: opacity 0.15s ease;
 }
 
-.icaroon-drop:hover,
-.icaroon-drop--active {
+.icaloon-drop:hover,
+.icaloon-drop--active {
   opacity: 1;
 }
 
-.icaroon-drop input[type="file"] {
+.icaloon-drop input[type="file"] {
   display: none;
 }
 
-.icaroon-button {
+.icaloon-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -82,34 +82,34 @@
   vertical-align: middle;
 }
 
-.icaroon-button:hover:not([disabled]) {
+.icaloon-button:hover:not([disabled]) {
   opacity: 0.7;
 }
 
-.icaroon-button--primary {
+.icaloon-button--primary {
   background-color: #3498db;
   border-color: #3498db;
   color: #fff;
 }
 
-.icaroon-button[disabled] {
+.icaloon-button[disabled] {
   opacity: 0.4;
   cursor: not-allowed;
 }
 
-.icaroon-actions {
+.icaloon-actions {
   margin-top: 10px;
 }
 
-.icaroon-table {
+.icaloon-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
   font-size: 0.9em;
 }
 
-.icaroon-table th,
-.icaroon-table td {
+.icaloon-table th,
+.icaloon-table td {
   border: 1px solid currentColor;
   border-color: rgba(128, 128, 128, 0.3);
   padding: 4px 8px;
@@ -117,25 +117,25 @@
   vertical-align: top;
 }
 
-.icaroon-table th {
+.icaloon-table th {
   font-weight: 600;
   background-color: rgba(128, 128, 128, 0.08);
 }
 
-.icaroon-row--skip {
+.icaloon-row--skip {
   opacity: 0.6;
 }
 
-.icaroon-row--excluded {
+.icaloon-row--excluded {
   opacity: 0.5;
 }
 
-.icaroon-table .icaroon-col-select {
+.icaloon-table .icaloon-col-select {
   width: 1%;
   text-align: center;
 }
 
-.icaroon-progress {
+.icaloon-progress {
   margin-top: 10px;
   height: 6px;
   background-color: rgba(128, 128, 128, 0.2);
@@ -143,28 +143,28 @@
   overflow: hidden;
 }
 
-.icaroon-progress-bar {
+.icaloon-progress-bar {
   height: 100%;
   background-color: #3498db;
   width: 0;
   transition: width 0.2s ease;
 }
 
-.icaroon-summary {
+.icaloon-summary {
   margin-top: 10px;
   padding: 8px 10px;
   border-radius: 3px;
   background-color: rgba(128, 128, 128, 0.08);
 }
 
-.icaroon-error-list {
+.icaloon-error-list {
   margin: 6px 0 0;
   padding-left: 18px;
   font-size: 0.9em;
 }
 
 /* help dialog: showModal() でトップレイヤーに出すので、ポートレットが小さくても画面全体に重なる */
-.icaroon-help-dialog {
+.icaloon-help-dialog {
   width: calc(100% - 24px);
   max-width: 560px;
   max-height: calc(100% - 80px);
@@ -175,11 +175,11 @@
   color: inherit;
 }
 
-.icaroon-help-dialog::backdrop {
+.icaloon-help-dialog::backdrop {
   background: rgba(0, 0, 0, 0.4);
 }
 
-.icaroon-help-panel {
+.icaloon-help-panel {
   box-sizing: border-box;
   padding: 16px 20px 20px;
   border-radius: 8px;
@@ -190,25 +190,25 @@
   line-height: 1.6;
 }
 
-.icaroon-help-header {
+.icaloon-help-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.icaroon-help-title {
+.icaloon-help-title {
   font-size: 18px;
   font-weight: bold;
 }
 
-.icaroon-help-version {
+.icaloon-help-version {
   margin-left: 4px;
   font-size: 12px;
   font-weight: normal;
   opacity: 0.6;
 }
 
-.icaroon-help-close {
+.icaloon-help-close {
   padding: 2px 6px;
   border: none;
   background: none;
@@ -219,51 +219,51 @@
   cursor: pointer;
 }
 
-.icaroon-help-close:hover {
+.icaloon-help-close:hover {
   opacity: 1;
 }
 
-.icaroon-help-section {
+.icaloon-help-section {
   margin-top: 16px;
 }
 
-.icaroon-help-heading {
+.icaloon-help-heading {
   margin: 0 0 6px;
   font-size: 13px;
   font-weight: bold;
 }
 
-.icaroon-help-text {
+.icaloon-help-text {
   margin: 0;
 }
 
-.icaroon-help-list {
+.icaloon-help-list {
   margin: 0;
   padding-left: 18px;
 }
 
-.icaroon-help-licenses {
+.icaloon-help-licenses {
   margin: 8px 0 0;
   padding: 0;
   list-style: none;
 }
 
-.icaroon-help-license + .icaroon-help-license {
+.icaloon-help-license + .icaloon-help-license {
   margin-top: 4px;
 }
 
-.icaroon-help-license-row {
+.icaloon-help-license-row {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.icaroon-help-license-source {
+.icaloon-help-license-source {
   flex-shrink: 0;
   font-size: 12px;
 }
 
-.icaroon-help-license-toggle {
+.icaloon-help-license-toggle {
   display: flex;
   flex: 1;
   min-width: 0;
@@ -280,17 +280,17 @@
   cursor: pointer;
 }
 
-.icaroon-help-license-toggle:disabled {
+.icaloon-help-license-toggle:disabled {
   cursor: default;
 }
 
-.icaroon-help-license-tag {
+.icaloon-help-license-tag {
   flex-shrink: 0;
   font-size: 11px;
   opacity: 0.7;
 }
 
-.icaroon-help-license-text {
+.icaloon-help-license-text {
   max-height: 240px;
   margin: 4px 0 0;
   padding: 8px;
