@@ -2,6 +2,9 @@
 
 ## ビルド
 
+リリース済みのバージョンは [GitHub Releases](https://github.com/tasshi-me/icaroon/releases) から
+XML と HTML をダウンロードできる。手元でビルドする場合:
+
 ```sh
 pnpm build
 ```

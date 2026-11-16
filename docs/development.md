@@ -61,3 +61,16 @@ Garoon のページには本物の `garoon` グローバルがあるので、代
 ## ビルドとデプロイ
 
 [deploy.md](deploy.md) を参照。
+
+## リリース
+
+[release-please](https://github.com/googleapis/release-please) で自動化している。
+
+1. [Conventional Commits](https://www.conventionalcommits.org/) で main にコミットする
+   （1.0.0 未満の間は `feat:` → minor / `fix:` → patch / `feat!:` や `BREAKING CHANGE` → minor）
+2. release-please が package.json の version 更新と CHANGELOG 更新を行う
+   **リリース PR** を自動で作成・更新する
+3. そのリリース PR をマージすると、タグと GitHub Release が作成され、`pnpm build` した
+   ポートレットの XML と HTML が Release のアセットとして自動添付される
+
+version は package.json 由来で、ポートレット名・成果物のファイル名・`data-version` に反映される。
