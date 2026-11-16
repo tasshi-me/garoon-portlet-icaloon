@@ -2,7 +2,7 @@ import type { Messages } from "./messages";
 
 export const en: Messages = {
   appName: "iCaloon",
-  appTitle: "iCaloon — Import ics",
+  appTitle: "iCaloon",
 
   fileDropHint: "Select an .ics file or drag and drop it here.",
   fileDropArea: "Click to choose / drop file here",
