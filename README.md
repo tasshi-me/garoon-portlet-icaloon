@@ -6,7 +6,7 @@ Garoon のポートレットとして動く `.ics` インポートツール。
 ## 仕組み
 
 - TypeScript + Vite (lib mode, IIFE) でビルドし、単一の JS / CSS バンドルを出力
-- `scripts/build-xml.ts` がバンドルを Garoon の HTML ポートレット XML 形式 (`dist/iCaroon.xml`) にパッケージング
+- `scripts/build-xml.ts` がバンドルを Garoon の HTML ポートレット XML 形式 (`dist/icaroon_v<バージョン>_<日時>.xml`) にパッケージング
 - 認証は Garoon JS API `garoon.api()` を経由（セッション認証・CSRF トークン管理は不要）
 - `.ics` のパースは [ical.js](https://github.com/kewisch/ical.js) を使用
 
@@ -16,10 +16,7 @@ Garoon のポートレットとして動く `.ics` インポートツール。
 
 ## Garoon への導入
 
-1. `pnpm build` で `dist/iCaroon.xml` を生成
-2. Garoon のシステム管理 →「ポータル」→「HTMLポートレット」→「XMLファイルから読み込む」で `iCaroon.xml` を選択
-3. ポータル（マイポータル可）に iCaroon ポートレットを配置
-4. ポートレットの「ファイルを選択」から `.ics` をアップロード → プレビュー → 登録
+ビルドと Garoon への配置・更新の手順は [docs/deploy.md](docs/deploy.md) を参照。
 
 ## スコープ
 

@@ -42,3 +42,12 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+      - name: Report portlet size
+        run: |
+          {
+            echo "### Portlet size"
+            echo '```'
+            ls -lh dist/icaroon_*.xml dist/icaroon_*.html | awk '{print $9, $5}'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
