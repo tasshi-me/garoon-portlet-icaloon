@@ -2,7 +2,7 @@ import type { Messages } from "./messages";
 
 export const ja: Messages = {
   appName: "iCal読め太郎 for Garoon",
-  appTitle: "iCal読め太郎 for Garoon — icsを簡単インポート",
+  appTitle: "iCal読め太郎",
 
   fileDropHint: ".ics ファイルを選択またはドラッグ&ドロップしてください。",
   fileDropArea: "クリックして選択 / ここにドラッグ",
