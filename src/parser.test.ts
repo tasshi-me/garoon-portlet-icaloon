@@ -132,9 +132,8 @@ describe("parseIcs", () => {
     expect(results.map((r) => r.ok)).toEqual([true, true, true, false]);
   });
 
-  describe("既知のバグ", () => {
-    // FIXME: VTIMEZONE が無いと ical.js がオフセットを解決できず、UTC (Z) として出力される
-    test.fails("VTIMEZONE が無い TZID=Asia/Tokyo の予定を +09:00 で変換する", () => {
+  describe("VTIMEZONE が無い時刻", () => {
+    test("TZID=Asia/Tokyo の予定を +09:00 で変換する", () => {
       const [result] = parseIcs(
         ics([
           [
@@ -147,14 +146,36 @@ describe("parseIcs", () => {
 
       expect(result).toMatchObject({
         ok: true,
-        event: { start: { dateTime: "2026-06-05T10:00:00+09:00", timeZone: "Asia/Tokyo" } },
+        event: {
+          start: { dateTime: "2026-06-05T10:00:00+09:00", timeZone: "Asia/Tokyo" },
+          end: { dateTime: "2026-06-05T11:00:00+09:00", timeZone: "Asia/Tokyo" },
+        },
       });
     });
 
-    // FIXME: floating time は Asia/Tokyo とみなす想定だが、オフセットが Z になる
-    test.fails("floating time の予定を +09:00 で変換する", () => {
+    test("TZID のタイムゾーンのサマータイムを考慮する", () => {
+      const results = parseIcs(
+        ics([
+          ["SUMMARY:夏", "DTSTART;TZID=America/New_York:20260701T090000"],
+          ["SUMMARY:冬", "DTSTART;TZID=America/New_York:20260105T090000"],
+        ]),
+      );
+
+      expect(results).toMatchObject([
+        {
+          ok: true,
+          event: { start: { dateTime: "2026-07-01T09:00:00-04:00", timeZone: "America/New_York" } },
+        },
+        {
+          ok: true,
+          event: { start: { dateTime: "2026-01-05T09:00:00-05:00", timeZone: "America/New_York" } },
+        },
+      ]);
+    });
+
+    test("不正な TZID は Asia/Tokyo とみなす", () => {
       const [result] = parseIcs(
-        ics([["SUMMARY:floating", "DTSTART:20260605T100000", "DTEND:20260605T110000"]]),
+        ics([["SUMMARY:不正", "DTSTART;TZID=Tokyo Standard Time:20260605T100000"]]),
       );
 
       expect(result).toMatchObject({
@@ -163,12 +184,54 @@ describe("parseIcs", () => {
       });
     });
 
-    // FIXME: ical.js は DTEND が無いと endDate を開始時刻で補うため、isStartOnly にならない
-    test.fails("DTEND が無い予定は isStartOnly にする", () => {
+    test("floating time の予定を Asia/Tokyo (+09:00) で変換する", () => {
+      const [result] = parseIcs(
+        ics([["SUMMARY:floating", "DTSTART:20260605T100000", "DTEND:20260605T110000"]]),
+      );
+
+      expect(result).toMatchObject({
+        ok: true,
+        event: {
+          start: { dateTime: "2026-06-05T10:00:00+09:00", timeZone: "Asia/Tokyo" },
+          end: { dateTime: "2026-06-05T11:00:00+09:00", timeZone: "Asia/Tokyo" },
+        },
+      });
+    });
+  });
+
+  describe("終了時刻", () => {
+    test("DTEND が無い予定は isStartOnly にする", () => {
       const [result] = parseIcs(ics([["SUMMARY:終了なし", "DTSTART:20260607T050000Z"]]));
 
       expect(result).toMatchObject({ ok: true, event: { isStartOnly: true } });
       expect(result?.ok && result.event.end).toBeUndefined();
+    });
+
+    test("DURATION がある予定は DTSTART の TZID で終了時刻を出す", () => {
+      const [result] = parseIcs(
+        ics([["SUMMARY:duration", "DTSTART;TZID=Asia/Tokyo:20260605T100000", "DURATION:PT30M"]]),
+      );
+
+      expect(result).toMatchObject({
+        ok: true,
+        event: {
+          isStartOnly: false,
+          end: { dateTime: "2026-06-05T10:30:00+09:00", timeZone: "Asia/Tokyo" },
+        },
+      });
+    });
+
+    test("DTEND が無い終日予定は翌日までにする", () => {
+      const [result] = parseIcs(ics([["SUMMARY:終日", "DTSTART;VALUE=DATE:20260613"]]));
+
+      expect(result).toMatchObject({
+        ok: true,
+        event: {
+          isAllDay: true,
+          isStartOnly: false,
+          end: { dateTime: "2026-06-14T00:00:00+09:00", timeZone: "Asia/Tokyo" },
+        },
+      });
     });
   });
 });

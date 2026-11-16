@@ -41,11 +41,20 @@ function toParseResult(vevent: ICAL.Component): ParseResult {
       return { ok: false, subject, reason: t("noDtstart") };
     }
 
-    const endTime = event.endDate ?? null;
     const isAllDay = startTime.isDate === true;
+    // ical.js は DTEND も DURATION も無いと終了を開始時刻で補うため、元のプロパティで判定する
+    const hasEnd = vevent.hasProperty("dtend") || vevent.hasProperty("duration");
+    const endTime = isAllDay || hasEnd ? (event.endDate ?? null) : null;
 
-    const start = formatTime(startTime, isAllDay);
-    const end = endTime ? formatTime(endTime, isAllDay) : undefined;
+    const start = formatTime(startTime, isAllDay, tzidParam(vevent, "dtstart"));
+    const end = endTime
+      ? formatTime(
+          endTime,
+          isAllDay,
+          // DURATION で終了が決まる場合は DTEND が無いので、DTSTART の TZID を使う
+          tzidParam(vevent, "dtend") ?? tzidParam(vevent, "dtstart"),
+        )
+      : undefined;
     const isStartOnly = !end;
 
     const notesParts: string[] = [];
@@ -67,7 +76,11 @@ function toParseResult(vevent: ICAL.Component): ParseResult {
   }
 }
 
-function formatTime(time: ICAL.Time, isAllDay: boolean): { dateTime: string; timeZone: string } {
+function formatTime(
+  time: ICAL.Time,
+  isAllDay: boolean,
+  tzid: string | undefined,
+): { dateTime: string; timeZone: string } {
   if (isAllDay) {
     const y = pad4(time.year);
     const m = pad2(time.month);
@@ -78,23 +91,72 @@ function formatTime(time: ICAL.Time, isAllDay: boolean): { dateTime: string; tim
     };
   }
 
-  const tzid = resolveTzid(time);
-  const offsetSec = time.utcOffset();
-  const offsetStr = formatOffset(offsetSec);
   const local = `${pad4(time.year)}-${pad2(time.month)}-${pad2(time.day)}T${pad2(
     time.hour,
   )}:${pad2(time.minute)}:${pad2(time.second)}`;
+
+  const zoneTzid = time.zone?.tzid;
+  if (zoneTzid && zoneTzid !== "floating") {
+    // VTIMEZONE か UTC で解決できたタイムゾーンは ical.js のオフセットを使う
+    return {
+      dateTime: `${local}${formatOffset(time.utcOffset())}`,
+      timeZone: zoneTzid === "Z" ? "UTC" : zoneTzid,
+    };
+  }
+
+  // floating time と、VTIMEZONE が無く解決できなかった TZID は、
+  // TZID パラメータ（無いか不正なら DEFAULT_TZ）の IANA タイムゾーンとして扱う
+  const timeZone = tzid && isValidTimeZone(tzid) ? tzid : DEFAULT_TZ;
   return {
-    dateTime: `${local}${offsetStr}`,
-    timeZone: tzid,
+    dateTime: `${local}${formatOffset(offsetInZone(time, timeZone))}`,
+    timeZone,
   };
 }
 
-function resolveTzid(time: ICAL.Time): string {
-  const tzid = time.zone?.tzid;
-  if (!tzid || tzid === "floating") return DEFAULT_TZ;
-  if (tzid === "Z") return "UTC";
-  return tzid;
+function tzidParam(vevent: ICAL.Component, name: string): string | undefined {
+  const tzid = vevent.getFirstProperty(name)?.getParameter("tzid");
+  return typeof tzid === "string" ? tzid : undefined;
+}
+
+function isValidTimeZone(timeZone: string): boolean {
+  try {
+    new Intl.DateTimeFormat("en-US", { timeZone });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// 壁時計の時刻 time が、タイムゾーン timeZone で何秒のオフセットになるかを返す
+function offsetInZone(time: ICAL.Time, timeZone: string): number {
+  const wall = Date.UTC(time.year, time.month - 1, time.day, time.hour, time.minute, time.second);
+  // 壁時計を UTC とみなした推定で一度オフセットを求め、その UTC 時刻で求め直す（DST の境界対策）
+  const guess = zoneOffsetAt(wall, timeZone);
+  return zoneOffsetAt(wall - guess * 1000, timeZone);
+}
+
+function zoneOffsetAt(utcMs: number, timeZone: string): number {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    hourCycle: "h23",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  }).formatToParts(new Date(utcMs));
+  const get = (type: Intl.DateTimeFormatPartTypes) =>
+    Number(parts.find((p) => p.type === type)?.value);
+  const asUtc = Date.UTC(
+    get("year"),
+    get("month") - 1,
+    get("day"),
+    get("hour"),
+    get("minute"),
+    get("second"),
+  );
+  return Math.round((asUtc - utcMs) / 1000);
 }
 
 function formatOffset(seconds: number): string {
