@@ -14,12 +14,14 @@ export type Messages = {
   registering: string; // {done} {total}
 
   // done summary
-  doneSummary: string; // {success} {failed} {skipped}
+  doneSummary: string; // {success} {failed} {excluded} {skipped}
   failedItem: string; // {subject} {message}
   skippedItem: string; // {subject} {reason}
   tryAgain: string;
 
   // table
+  colSelect: string; // header checkbox label (select all)
+  selectEvent: string; // {subject}
   colSubject: string;
   colStart: string;
   colEnd: string;
