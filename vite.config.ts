@@ -20,13 +20,13 @@ export default defineConfig(({ mode }) => {
       cssCodeSplit: false,
       lib: {
         entry: resolve(__dirname, "src/main.tsx"),
-        name: "Icaroon",
+        name: "ICaloon",
         formats: ["iife"],
-        fileName: () => "icaroon.iife.js",
+        fileName: () => "icaloon.iife.js",
       },
       rollupOptions: {
         output: {
-          assetFileNames: "icaroon.css",
+          assetFileNames: "icaloon.css",
           inlineDynamicImports: true,
         },
       },

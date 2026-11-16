@@ -2,9 +2,9 @@ import { appLicenseText, licenses } from "virtual:licenses";
 import { useEffect, useRef, useState } from "preact/hooks";
 import { t } from "./i18n";
 
-const REPOSITORY_URL = "https://github.com/tasshi-me/icaroon";
+const REPOSITORY_URL = "https://github.com/tasshi-me/garoon-portlet-icaloon";
 const COPYRIGHT = "© 2026 tasshi (Masaharu Tashiro)";
-const APP_LICENSE_KEY = "icaroon";
+const APP_LICENSE_KEY = "icaloon";
 
 export function HelpDialog({ onClose }: { onClose: () => void }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -23,7 +23,7 @@ export function HelpDialog({ onClose }: { onClose: () => void }) {
     // biome-ignore lint/a11y/useKeyWithClickEvents: キーボードでは Esc で閉じられる
     <dialog
       ref={dialogRef}
-      class="icaroon-help-dialog"
+      class="icaloon-help-dialog"
       aria-label={t("helpTitle")}
       onClose={onClose}
       onClick={(e) => {
@@ -31,14 +31,14 @@ export function HelpDialog({ onClose }: { onClose: () => void }) {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div class="icaroon-help-panel">
-        <div class="icaroon-help-header">
-          <span class="icaroon-help-title">
-            iCaroon <span class="icaroon-help-version">v{__APP_VERSION__}</span>
+      <div class="icaloon-help-panel">
+        <div class="icaloon-help-header">
+          <span class="icaloon-help-title">
+            {t("appName")} <span class="icaloon-help-version">v{__APP_VERSION__}</span>
           </span>
           <button
             type="button"
-            class="icaroon-help-close"
+            class="icaloon-help-close"
             aria-label={t("close")}
             onClick={onClose}
           >
@@ -46,9 +46,9 @@ export function HelpDialog({ onClose }: { onClose: () => void }) {
           </button>
         </div>
 
-        <section class="icaroon-help-section">
-          <h4 class="icaroon-help-heading">{t("helpLinks")}</h4>
-          <ul class="icaroon-help-list">
+        <section class="icaloon-help-section">
+          <h4 class="icaloon-help-heading">{t("helpLinks")}</h4>
+          <ul class="icaloon-help-list">
             <li>
               <a href={REPOSITORY_URL} target="_blank" rel="noreferrer">
                 {t("helpRepository")}
@@ -57,10 +57,10 @@ export function HelpDialog({ onClose }: { onClose: () => void }) {
           </ul>
         </section>
 
-        <section class="icaroon-help-section">
-          <h4 class="icaroon-help-heading">{t("helpLicense")}</h4>
-          <p class="icaroon-help-text">{COPYRIGHT}</p>
-          <ul class="icaroon-help-licenses">
+        <section class="icaloon-help-section">
+          <h4 class="icaloon-help-heading">{t("helpLicense")}</h4>
+          <p class="icaloon-help-text">{COPYRIGHT}</p>
+          <ul class="icaloon-help-licenses">
             <LicenseItem
               label={t("helpAppLicense")}
               tag="MIT"
@@ -71,10 +71,10 @@ export function HelpDialog({ onClose }: { onClose: () => void }) {
           </ul>
         </section>
 
-        <section class="icaroon-help-section">
-          <h4 class="icaroon-help-heading">{t("helpOssLicenses")}</h4>
-          <p class="icaroon-help-text">{t("helpOssLicensesNote")}</p>
-          <ul class="icaroon-help-licenses">
+        <section class="icaloon-help-section">
+          <h4 class="icaloon-help-heading">{t("helpOssLicenses")}</h4>
+          <p class="icaloon-help-text">{t("helpOssLicensesNote")}</p>
+          <ul class="icaloon-help-licenses">
             {licenses.map((lib) => {
               const key = `${lib.name}@${lib.version}`;
               return (
@@ -112,21 +112,21 @@ function LicenseItem({
   onToggle: () => void;
 }) {
   return (
-    <li class="icaroon-help-license">
-      <div class="icaroon-help-license-row">
+    <li class="icaloon-help-license">
+      <div class="icaloon-help-license-row">
         <button
           type="button"
-          class="icaroon-help-license-toggle"
+          class="icaloon-help-license-toggle"
           aria-expanded={open}
           disabled={!text}
           onClick={onToggle}
         >
           <span>{label}</span>
-          <span class="icaroon-help-license-tag">{tag}</span>
+          <span class="icaloon-help-license-tag">{tag}</span>
         </button>
         {sourceUrl && (
           <a
-            class="icaroon-help-license-source"
+            class="icaloon-help-license-source"
             href={sourceUrl}
             target="_blank"
             rel="noreferrer"
@@ -136,7 +136,7 @@ function LicenseItem({
           </a>
         )}
       </div>
-      {open && <pre class="icaroon-help-license-text">{text}</pre>}
+      {open && <pre class="icaloon-help-license-text">{text}</pre>}
     </li>
   );
 }

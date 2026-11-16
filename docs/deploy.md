@@ -2,7 +2,7 @@
 
 ## ビルド
 
-リリース済みのバージョンは [GitHub Releases](https://github.com/tasshi-me/icaroon/releases) から
+リリース済みのバージョンは [GitHub Releases](https://github.com/tasshi-me/garoon-portlet-icaloon/releases) から
 XML と HTML をダウンロードできる。手元でビルドする場合:
 
 ```sh
@@ -13,25 +13,25 @@ pnpm build
 
 | ファイル                        | 用途                                                          |
 | ------------------------------- | ------------------------------------------------------------- |
-| `dist/icaroon_v<v>_<日時>.xml`  | Garoon の「XMLファイルから読み込む」でインポートする XML      |
-| `dist/icaroon_v<v>_<日時>.html` | 既存の HTML ポートレットの内容欄に貼り付ける HTML 断片        |
+| `dist/icaloon_v<v>_<日時>.xml`  | Garoon の「XMLファイルから読み込む」でインポートする XML      |
+| `dist/icaloon_v<v>_<日時>.html` | 既存の HTML ポートレットの内容欄に貼り付ける HTML 断片        |
 
-ポートレット名は `iCaroon v<v> (<日時>)` になり、どのビルドが載っているか判別できる。
-アプリのルート要素 (`.icaroon`) の `data-version` 属性でもバージョンを確認できる。
+ポートレット名は `iCal読め太郎 for Garoon (iCaloon) v<v> (<日時>)` になり、どのビルドが載っているか判別できる。
+アプリのルート要素 (`.icaloon`) の `data-version` 属性でもバージョンを確認できる。
 
 ## Garoon への配置
 
 ### 新規に導入する
 
 1. Garoon のシステム管理 →「ポータル」→「HTMLポートレット」→「XMLファイルから読み込む」で
-   `dist/icaroon_v<v>_<日時>.xml` を選択
-2. ポータル（マイポータル可）に iCaroon ポートレットを配置
+   `dist/icaloon_v<v>_<日時>.xml` を選択
+2. ポータル（マイポータル可）に iCal読め太郎 for Garoon ポートレットを配置
 3. ポートレットの「ファイルを選択」から `.ics` をアップロード → プレビュー → 登録
 
 ### 既存のポートレットを更新する
 
 XML の読み込みは新しいポートレットの作成になるため、既存のものを更新するときは内容を貼り替える。
 
-1. Garoon のシステム管理 →「ポータル」→「HTMLポートレット」で既存の iCaroon ポートレットを変更
-2. 内容欄を `dist/icaroon_v<v>_<日時>.html` の中身で置き換えて保存
+1. Garoon のシステム管理 →「ポータル」→「HTMLポートレット」で既存の iCal読め太郎 for Garoon ポートレットを変更
+2. 内容欄を `dist/icaloon_v<v>_<日時>.html` の中身で置き換えて保存
 3. 必要ならポートレット名も新しいバージョンに合わせる

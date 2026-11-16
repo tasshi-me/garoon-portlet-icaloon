@@ -10,7 +10,7 @@ async function init() {
     installGaroonShim();
   }
   detectAndSetLocale();
-  const root = document.getElementById("icaroon-root");
+  const root = document.getElementById("icaloon-root");
   if (!root) {
     console.warn(t("rootNotFound"));
     return;

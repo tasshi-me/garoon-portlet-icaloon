@@ -5,7 +5,7 @@ const mode = import.meta.env.VITE_API_MODE === "proxy" ? "proxy" : "mock";
 
 const mockGaroon: GaroonGlobal = {
   async api(path, method, params) {
-    console.info(`[icaroon mock] ${method} ${path}`, params);
+    console.info(`[icaloon mock] ${method} ${path}`, params);
     await new Promise((resolve) => setTimeout(resolve, 200));
     return {};
   },
@@ -46,5 +46,5 @@ const proxyGaroon: GaroonGlobal = {
 
 export function installGaroonShim(): void {
   window.garoon = mode === "proxy" ? proxyGaroon : mockGaroon;
-  console.info(`[icaroon] garoon shim installed (mode: ${mode})`);
+  console.info(`[icaloon] garoon shim installed (mode: ${mode})`);
 }

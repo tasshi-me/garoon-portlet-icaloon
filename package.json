@@ -1,7 +1,7 @@
 {
-  "name": "icaroon",
+  "name": "garoon-portlet-icaloon",
   "version": "0.0.0",
-  "description": "Garoon ポートレットとして動く ics インポートツール",
+  "description": "An iCalendar (.ics) importer for Garoon",
   "private": true,
   "type": "module",
   "license": "MIT",

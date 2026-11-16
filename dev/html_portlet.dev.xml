@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <html_portlets>
  <html_portlet>
-  <name><![CDATA[iCaroon (dev)]]></name>
+  <name><![CDATA[iCal読め太郎 for Garoon (iCaloon) dev]]></name>
   <type>grn.portal.html</type>
   <version>1</version>
-  <source><![CDATA[<div id="icaroon-root"></div>
+  <source><![CDATA[<div id="icaloon-root"></div>
 <script type="module" src="http://localhost:5173/@vite/client"></script>
 <script type="module" src="http://localhost:5173/src/main.tsx"></script>]]></source>
   <available_myportal>1</available_myportal>

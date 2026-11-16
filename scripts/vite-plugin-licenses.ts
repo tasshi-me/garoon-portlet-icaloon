@@ -26,7 +26,7 @@ type PnpmLicensePackage = {
 
 export function licensesPlugin(root: string): Plugin {
   return {
-    name: "icaroon:licenses",
+    name: "icaloon:licenses",
     resolveId(id) {
       if (id === VIRTUAL_ID) return RESOLVED_ID;
     },

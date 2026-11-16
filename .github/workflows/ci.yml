@@ -48,6 +48,6 @@ jobs:
           {
             echo "### Portlet size"
             echo '```'
-            ls -lh dist/icaroon_*.xml dist/icaroon_*.html | awk '{print $9, $5}'
+            ls -lh dist/icaloon_*.xml dist/icaloon_*.html | awk '{print $9, $5}'
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
