@@ -12,7 +12,10 @@ Garoon のポートレットとして動く `.ics` インポートツール。
 
 ## 開発
 
+[mise](https://mise.jdx.dev/) で Node.js / pnpm のバージョンを管理している。
+
 ```bash
+mise install
 pnpm install
 pnpm typecheck
 pnpm build       # dist/iCaroon.xml を生成
