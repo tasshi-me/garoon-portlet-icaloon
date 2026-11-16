@@ -1,6 +1,6 @@
 {
   "name": "icaroon",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Garoon ポートレットとして動く ics インポートツール",
   "private": true,
   "type": "module",
