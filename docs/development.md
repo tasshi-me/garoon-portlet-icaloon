@@ -13,6 +13,7 @@ pnpm install
 
 ```sh
 pnpm dev          # dev サーバーを起動（既定は mock モード）
+pnpm test         # ユニットテスト (Vitest)
 pnpm typecheck    # 型チェック
 pnpm lint         # Biome
 pnpm build        # dist/iCaroon.xml を生成
