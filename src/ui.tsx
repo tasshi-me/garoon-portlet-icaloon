@@ -14,12 +14,14 @@ type State =
       results: ParseResult[];
       done: number;
       total: number;
+      excluded: number;
       creates: CreateResult[];
     }
   | {
       phase: "done";
       fileName: string;
       results: ParseResult[];
+      excluded: number;
       creates: CreateResult[];
     };
 
@@ -88,9 +90,21 @@ function ParsedView({
 }) {
   const okCount = state.results.filter((r) => r.ok).length;
   const skipCount = state.results.length - okCount;
+  // 登録できる予定は最初からすべて選択しておき、不要なものだけ外してもらう
+  const [selected, setSelected] = useState<boolean[]>(() => state.results.map((r) => r.ok));
+  const selectedCount = state.results.filter((r, i) => r.ok && selected[i]).length;
+  const excluded = okCount - selectedCount;
+
+  function toggle(index: number, checked: boolean) {
+    setSelected((prev) => prev.map((v, i) => (i === index ? checked : v)));
+  }
+
+  function toggleAll(checked: boolean) {
+    setSelected(state.results.map((r) => r.ok && checked));
+  }
 
   async function runImport() {
-    const targets = state.results.flatMap((r) => (r.ok ? [r.event] : []));
+    const targets = state.results.flatMap((r, i) => (r.ok && selected[i] ? [r.event] : []));
     if (targets.length === 0) return;
 
     let loginUserCode: string;
@@ -102,6 +116,7 @@ function ParsedView({
         phase: "done",
         fileName: state.fileName,
         results: state.results,
+        excluded,
         creates: targets.map((target) => ({
           ok: false,
           subject: target.subject,
@@ -118,6 +133,7 @@ function ParsedView({
       results: state.results,
       done: 0,
       total: targets.length,
+      excluded,
       creates,
     });
 
@@ -132,6 +148,7 @@ function ParsedView({
         results: state.results,
         done: i + 1,
         total: targets.length,
+        excluded,
         creates: [...creates],
       });
     }
@@ -140,6 +157,7 @@ function ParsedView({
       phase: "done",
       fileName: state.fileName,
       results: state.results,
+      excluded,
       creates,
     });
   }
@@ -154,15 +172,20 @@ function ParsedView({
           skip: skipCount,
         })}
       </p>
-      <ResultTable results={state.results} />
+      <ResultTable
+        results={state.results}
+        selected={selected}
+        onToggle={toggle}
+        onToggleAll={toggleAll}
+      />
       <div class="icaroon-actions">
         <button
           type="button"
           class="icaroon-button icaroon-button--primary"
-          disabled={okCount === 0}
+          disabled={selectedCount === 0}
           onClick={runImport}
         >
-          {t("registerButton", { count: okCount })}
+          {t("registerButton", { count: selectedCount })}
         </button>
         <button type="button" class="icaroon-button" onClick={() => setState({ phase: "idle" })}>
           {t("cancel")}
@@ -204,7 +227,7 @@ function DoneView({
     subject: string;
     reason: string;
   }>;
-  const allGood = failed.length === 0 && skipped.length === 0;
+  const allGood = failed.length === 0 && skipped.length === 0 && state.excluded === 0;
 
   return (
     <>
@@ -214,6 +237,7 @@ function DoneView({
         {t("doneSummary", {
           success,
           failed: failed.length,
+          excluded: state.excluded,
           skipped: skipped.length,
         })}
       </div>
@@ -238,11 +262,35 @@ function DoneView({
   );
 }
 
-function ResultTable({ results }: { results: ParseResult[] }) {
+function ResultTable({
+  results,
+  selected,
+  onToggle,
+  onToggleAll,
+}: {
+  results: ParseResult[];
+  selected: boolean[];
+  onToggle: (index: number, checked: boolean) => void;
+  onToggleAll: (checked: boolean) => void;
+}) {
+  const selectable = results.filter((r) => r.ok).length;
+  const selectedCount = results.filter((r, i) => r.ok && selected[i]).length;
+
   return (
     <table class="icaroon-table">
       <thead>
         <tr>
+          <th class="icaroon-col-select">
+            <input
+              type="checkbox"
+              aria-label={t("colSelect")}
+              title={t("colSelect")}
+              disabled={selectable === 0}
+              checked={selectable > 0 && selectedCount === selectable}
+              indeterminate={selectedCount > 0 && selectedCount < selectable}
+              onChange={(e) => onToggleAll((e.currentTarget as HTMLInputElement).checked)}
+            />
+          </th>
           <th>{t("colSubject")}</th>
           <th>{t("colStart")}</th>
           <th>{t("colEnd")}</th>
@@ -254,7 +302,15 @@ function ResultTable({ results }: { results: ParseResult[] }) {
         {results.map((r, i) =>
           r.ok ? (
             // biome-ignore lint/suspicious/noArrayIndexKey: list is immutable
-            <tr key={i}>
+            <tr key={i} class={selected[i] ? undefined : "icaroon-row--excluded"}>
+              <td class="icaroon-col-select">
+                <input
+                  type="checkbox"
+                  aria-label={t("selectEvent", { subject: r.event.subject })}
+                  checked={selected[i] === true}
+                  onChange={(e) => onToggle(i, (e.currentTarget as HTMLInputElement).checked)}
+                />
+              </td>
               <td>{r.event.subject}</td>
               <td>
                 {formatDateTime(r.event.start.dateTime, r.event.start.timeZone, r.event.isAllDay)}
@@ -270,6 +326,9 @@ function ResultTable({ results }: { results: ParseResult[] }) {
           ) : (
             // biome-ignore lint/suspicious/noArrayIndexKey: list is immutable
             <tr key={i} class="icaroon-row--skip">
+              <td class="icaroon-col-select">
+                <input type="checkbox" aria-label={r.subject} checked={false} disabled />
+              </td>
               <td>{r.subject}</td>
               <td colspan={3} />
               <td>{r.reason}</td>

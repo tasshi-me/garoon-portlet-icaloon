@@ -12,11 +12,14 @@ export const ja: Messages = {
 
   registering: "登録中… {done} / {total}",
 
-  doneSummary: "完了: 成功 {success} 件 / 失敗 {failed} 件 / スキップ {skipped} 件",
+  doneSummary:
+    "完了: 成功 {success} 件 / 失敗 {failed} 件 / 除外 {excluded} 件 / スキップ {skipped} 件",
   failedItem: "[失敗] {subject}: {message}",
   skippedItem: "[スキップ] {subject}: {reason}",
   tryAgain: "もう一度",
 
+  colSelect: "すべて選択",
+  selectEvent: "「{subject}」を登録する",
   colSubject: "件名",
   colStart: "開始",
   colEnd: "終了",

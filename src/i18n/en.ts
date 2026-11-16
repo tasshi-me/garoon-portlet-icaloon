@@ -12,11 +12,14 @@ export const en: Messages = {
 
   registering: "Registering… {done} / {total}",
 
-  doneSummary: "Done: {success} succeeded / {failed} failed / {skipped} skipped",
+  doneSummary:
+    "Done: {success} succeeded / {failed} failed / {excluded} excluded / {skipped} skipped",
   failedItem: "[Failed] {subject}: {message}",
   skippedItem: "[Skipped] {subject}: {reason}",
   tryAgain: "Try again",
 
+  colSelect: "Select all",
+  selectEvent: 'Register "{subject}"',
   colSubject: "Subject",
   colStart: "Start",
   colEnd: "End",
