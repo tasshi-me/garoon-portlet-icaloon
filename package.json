@@ -9,6 +9,8 @@
   "packageManager": "pnpm@10.34.9",
   "scripts": {
     "dev": "vite",
+    "dev:mock": "VITE_API_MODE=mock vite",
+    "dev:proxy": "VITE_API_MODE=proxy vite",
     "build:bundle": "vite build",
     "build:xml": "tsx scripts/build-xml.ts",
     "build": "pnpm build:bundle && pnpm build:xml",

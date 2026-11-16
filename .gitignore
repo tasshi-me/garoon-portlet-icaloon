@@ -13,3 +13,9 @@ dist/
 .zed/
 .cursor/
 .aider*
+
+# Local env
+.env
+.env.local
+.env.*.local
+CLAUDE.local.md
