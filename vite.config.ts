@@ -4,6 +4,10 @@ import { resolve } from "node:path";
 import preact from "@preact/preset-vite";
 import { defineConfig, loadEnv } from "vite";
 
+const pkg = JSON.parse(readFileSync(resolve(__dirname, "package.json"), "utf8")) as {
+  version: string;
+};
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   return {
@@ -30,6 +34,7 @@ export default defineConfig(({ mode }) => {
     },
     define: {
       "process.env.NODE_ENV": JSON.stringify("production"),
+      __APP_VERSION__: JSON.stringify(pkg.version),
       // proxy モードの garoon shim が使うログインユーザーコード。パスワードは埋め込まない
       __DEV_LOGIN_USER_CODE__: JSON.stringify(env.GAROON_USERNAME ?? ""),
     },

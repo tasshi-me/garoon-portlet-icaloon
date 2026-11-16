@@ -27,7 +27,7 @@ export function App() {
   const [state, setState] = useState<State>({ phase: "idle" });
 
   return (
-    <div class="icaroon">
+    <div class="icaroon" data-version={__APP_VERSION__}>
       <h3 class="icaroon-title">{t("appTitle")}</h3>
       {state.phase === "idle" && <IdleView onParsed={setState} />}
       {state.phase === "parsed" && <ParsedView state={state} setState={setState} />}

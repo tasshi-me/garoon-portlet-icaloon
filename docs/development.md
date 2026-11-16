@@ -16,7 +16,7 @@ pnpm dev          # dev サーバーを起動（既定は mock モード）
 pnpm test         # ユニットテスト (Vitest)
 pnpm typecheck    # 型チェック
 pnpm lint         # Biome
-pnpm build        # dist/iCaroon.xml を生成
+pnpm build        # dist/ にポートレットの XML と HTML を生成
 ```
 
 `http://localhost:5173/` を開くと、ポートレットを単体で確認できる。
@@ -57,3 +57,7 @@ Garoon のページには本物の `garoon` グローバルがあるので、代
 - Chrome は HTTPS ページからでも `localhost` の読み込みを例外的に許可する。
   他ブラウザや、Garoon の CSP で外部スクリプトが禁止されている場合は読み込めない
 - dev サーバーはポート 5173 固定。使用中なら起動に失敗する
+
+## ビルドとデプロイ
+
+[deploy.md](deploy.md) を参照。
