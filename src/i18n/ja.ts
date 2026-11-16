@@ -41,5 +41,17 @@ export const ja: Messages = {
   loginUserFetchFail: "ログインユーザー情報が取得できませんでした",
   unknownError: "不明なエラー",
 
+  helpButton: "ヘルプ",
+  helpTitle: "iCaroon について",
+  close: "閉じる",
+  helpLinks: "リンク",
+  helpRepository: "リポジトリ (GitHub)",
+  helpLicense: "ライセンス",
+  helpAppLicense: "iCaroon は MIT License で提供しています。",
+  helpOssLicenses: "オープンソースライセンス",
+  helpOssLicensesNote: "iCaroon は以下のオープンソースソフトウェアを利用しています。",
+  helpSource: "ソース",
+  helpSourceOf: "{name} のソースコード",
+
   rootNotFound: "[iCaroon] #icaroon-root が見つかりません",
 };

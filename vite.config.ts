@@ -3,6 +3,7 @@ import https from "node:https";
 import { resolve } from "node:path";
 import preact from "@preact/preset-vite";
 import { defineConfig, loadEnv } from "vite";
+import { licensesPlugin } from "./scripts/vite-plugin-licenses";
 
 const pkg = JSON.parse(readFileSync(resolve(__dirname, "package.json"), "utf8")) as {
   version: string;
@@ -11,7 +12,7 @@ const pkg = JSON.parse(readFileSync(resolve(__dirname, "package.json"), "utf8"))
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   return {
-    plugins: [preact()],
+    plugins: [preact(), licensesPlugin(__dirname)],
     build: {
       target: "es2020",
       outDir: "dist",

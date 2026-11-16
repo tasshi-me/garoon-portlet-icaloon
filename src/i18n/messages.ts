@@ -45,6 +45,19 @@ export type Messages = {
   loginUserFetchFail: string;
   unknownError: string;
 
+  // help dialog
+  helpButton: string;
+  helpTitle: string;
+  close: string;
+  helpLinks: string;
+  helpRepository: string;
+  helpLicense: string;
+  helpAppLicense: string;
+  helpOssLicenses: string;
+  helpOssLicensesNote: string;
+  helpSource: string;
+  helpSourceOf: string; // {name}
+
   // dev / debug
   rootNotFound: string;
 };
